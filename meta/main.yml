@@ -4,10 +4,10 @@ galaxy_info:
   namespace: webarchitect609
   role_name: yandex_browser
   author: Gripinskiy Sergey
-  description: Installs Yandex Browser from official deb repo.
+  description: Installs Yandex Browser from the official repository.
   company: ''
   license: BSD-3-Clause
-  min_ansible_version: '2.12'
+  min_ansible_version: '2.15'
   platforms:
     - name: Ubuntu
       versions:

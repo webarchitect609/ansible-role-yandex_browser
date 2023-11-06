@@ -1,5 +1,15 @@
 ---
-- name: "Ensure dependencies are installed"
+- name: "fix 'configured multiple times'"
+  ansible.builtin.file:
+    path: "/etc/apt/sources.list.d/repo_yandex_ru_yandex_browser_deb.list"
+    state: absent
+
+- name: "refresh apt sources list"
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: "ensure dependencies are installed"
   ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
@@ -9,16 +19,17 @@
       - "gnupg"
       - "dirmngr"
 
-- name: "Add GPG key"
+- name: "add GPG key"
   ansible.builtin.apt_key:
     url: "{{ yabrowser_gpg_key_url }}"
 
-- name: "Add repository"
+- name: "add repository"
   ansible.builtin.apt_repository:
     repo: "{{ yabrowser_deb_source }}"
-    state: "present"
+    filename: "yandex-browser"
+    state: present
 
-- name: "Install Yandex Browser"
+- name: "install Yandex Browser"
   ansible.builtin.apt:
     name: "{{ yabrowser_package }}"
     state: present
